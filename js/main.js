@@ -1,8 +1,6 @@
 var users=[];
-var workers=[];
-var mStones=[];
-var all_tasks=[];
-var mStoneStatus=[];
+var all_values=[];
+
 
 async function GetUsers(){
     let url="/U/";
@@ -28,8 +26,9 @@ async function CreateUserSelector()
     }
 
     document.getElementById("userSelect").innerHTML = s;
+
 }
-function ShowTable()
+ function ShowTable()
 {
     let table = document.getElementById("userTable");
     // מציג את הטבלה אם זו הפעם הראשונה שמוסיפים נתון
@@ -37,45 +36,45 @@ function ShowTable()
     {
         table.style.display = "table";
     }
+     CreateTableBody();
 }
-/*
-function CreateTableBody() {
+
+async function GetValues()
+{
+    let url="/VAL/";
+    let response=await fetch(url);
+    let reply=await response.json();
+    console.log("reply=",reply);
+    all_values = reply.data;
+    console.log("reply=",all_values);
+}
+
+
+async function CreateTableBody()
+{
+    await GetValues();
+    let select = document.getElementById("userSelect");
+    let selectedValue = select.value;
+    console.log(selectedValue);
+    //let selectedText = select.options[select.selectedIndex].text;
     let s = "";
-    for(let row of all_tasks) {
-        let is_arsal = Number(row.is_arsal);
-        let smart_due=(row.nice_due === "00-00-0000")?"":row.nice_due;
-        s += (is_arsal === 1)?
-            "<tr class='arsal'>" :
-            "<tr>";
-        s += `    <td class="lvl${row.Lvl}">${row.description}</td>`;
-        s += `    <td>${workers[row.worker_id]}</td>`;
-        s += `    <td>${smart_due}</td>`;
-        s += `    <td>${row.progress_prcnt}</td>`;
-        s += `    <td>${categs[row.categ_id]}</td>`;
-        for (let stone of mStones) {
-            let sValue="";
-            let sCls="";
-            // console.log("row.id,stone.id = ",row.id,stone.id);
-            if((mStoneStatus[row.id] !== null)&&
-                (mStoneStatus[row.id][stone.id] !== null)){
-                switch (parseInt(mStoneStatus[row.id][stone.id])) {
-                    case 1: sValue="כן";    sCls="green";   break;
-                    case 2: sValue="לא";    sCls="red";     break;
-                    case 3: sValue="חלקי";  sCls="yellow";  break;
-                }
-            }
-            s += `<td class="${sCls}">`;
-            s += `${sValue}`;
+    console.log(all_values);
+    for(let row of all_values)
+    {
+        console.log(row);
+        if(parseInt(selectedValue)===row.id_user)
+        {
+            s += "<tr>";
+            s += `    <td>${row.high_val}</td>`;
+            s += `    <td>${row.low_val}</td>`;
+            s += `    <td>${row.pulse}</td>`;
+            s += `    <td>${row.date}</td>`;
             s += "</td>";
+            s += "</tr>";
         }
-        s += "</tr>";
+
+
     }
     document.getElementById("mainTableData").innerHTML = s;
 }
-async function BuildPage() {
-    await GetCateg();
-    await GetStatus();
-    await GetWorkers();
-    await GetMileStones();
-    await GetTasks();
-}*/
+

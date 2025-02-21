@@ -16,7 +16,7 @@ router.get('/',[values_Mid.ReadValues], (req, res) => { //Read - קבלת רשי
         res.status(200).json(
             {
                 msg         :"ok",
-                data        :req.all_values,
+                data        :req.all_values
             });
     } else {
         return res.status(500).json({message: "err"});
