@@ -1,3 +1,27 @@
-body{background:lightgreen;direction: rtl}
+body{background:lightskyblue;direction: rtl; font-family:"Arial";}
 td,th{border:1px solid black;}
+
+ select {
+     padding: 10px;
+     font-size: 16px;
+     border-radius: 5px;
+     border: 1px solid #ccc;
+     background-color: white;
+     cursor: pointer;
+ }
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    display: none; /* מסתיר את הטבלה בהתחלה */
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
+
 

@@ -24,12 +24,12 @@ async function ReadUsers(req,res,next){
     // console.log(Query);
     const promisePool = db_pool.promise();
     let rows=[];
-    req.user_by_id=[];
+    req.users_by_id=[];
     try {
         [rows] = await promisePool.query(Query);
         for(let idx in rows){
             rows[idx].name= htmlspecialchars(stripSlashes(rows[idx].name));
-            req.user_by_id[rows[idx].id]=rows[idx].name;
+            req.users_by_id[rows[idx].id]=rows[idx].name;
         }
         req.success=true;
         req.users_data=rows;

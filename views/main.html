@@ -5,11 +5,30 @@
     <title>תוכנת מעקב לחץ דם</title>
     <link rel="stylesheet" href="/CSS1/main.css">
 </head>
-<body>
-<table>
-    <thead id="mainHeader">  sfdsfd  </thead>
-    <tbody id="mainTableData">    </tbody>
-</table>
+<body onload="CreateUserSelector()">
+
 <script src="/js/main.js"></script>
+
+        <label for="userSelect">בחר משתמש:</label>
+        <select id="userSelect" name="options">
+        </select>
+
+<button onclick="ShowTable()" >ביצוע</button>
+
+<table id="userTable" style="display: none;">
+        <thead id="mainHeader">
+        <tr>
+            <th>ערך גבוה</th>
+            <th>ערך נמוך</th>
+            <th>דופק</th>
+            <th>תאריך</th>
+        </tr>
+        </thead>
+        <tbody id="mainTableData">
+        </tbody>
+</table>
+
+
+
 </body>
 </html>

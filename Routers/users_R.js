@@ -17,7 +17,7 @@ router.get('/',[users_Mid.ReadUsers], (req, res) => { //Read - קבלת רשימ
             {
                 msg         :"ok",
                 data        :req.users_data,
-                users_by_id:req.users_by_id,
+                users_by_id :req.users_by_id
             });
     } else {
         return res.status(500).json({message: err});
