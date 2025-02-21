@@ -27,7 +27,7 @@ router.put('/', [values_Mid.UpdateValues], (req, res) => { //Update - עריכה
     if(req.success){
         res.status(200).json({msg:"ok"});
     } else {
-        return res.status(500).json({message: err});
+        return res.status(500).json({message: req.message});
     }
 });
 router.delete('/',[values_Mid.DeleteValues], (req, res) => { // Delete - מחיקה
