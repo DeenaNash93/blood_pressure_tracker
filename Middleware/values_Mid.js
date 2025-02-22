@@ -9,10 +9,10 @@ function isValidDate(dateString) {
     return !isNaN(date.getTime());
 }
 async function AddValues(req,res,next){
-    let user_id   = (typeof req.body.user_id !== "undefined" && !isNaN(req.body.user_id))  ? parseInt(req.body.user_id) : -1;
-    let high_Val  = (typeof req.body.high_Val !== "undefined" && !isNaN(req.body.high_Val))? parseInt(req.body.high_Val): 0;
-    let low_Val   = (typeof req.body.low_Val !== "undefined" && !isNaN(req.body.low_Val))  ? parseInt(req.body.low_Val) : 0;
-    let pulse     = (typeof req.body.pulse !== "undefined" && !isNaN(req.body.pulse))      ? parseInt(req.body.pulse)   : 0;
+    let user_id   = (typeof req.body.user_id !== "undefined" && !isNaN(req.body.user_id) && (req.body.user_id)>0)  ? parseInt(req.body.user_id) : -1;
+    let high_Val  = (typeof req.body.high_Val !== "undefined" && !isNaN(req.body.high_Val) && (req.body.high_Val)>0)? parseInt(req.body.high_Val): 0;
+    let low_Val   = (typeof req.body.low_Val !== "undefined" && !isNaN(req.body.low_Val) && (req.body.low_Val)>0)  ? parseInt(req.body.low_Val) : 0;
+    let pulse     = (typeof req.body.pulse !== "undefined" && !isNaN(req.body.pulse)  && (req.body.pulse)>0)     ? parseInt(req.body.pulse)   : 0;
     let date    = ( req.body.date     !== undefined &&  isValidDate(req.body.date))     ? addSlashes(req.body.date)   :null;
 
     let Query = "INSERT INTO blood_pressure_values ";
@@ -62,9 +62,9 @@ async function ReadValues(req,res,next)
 }
 async function UpdateValues(req,res,next){
     let idx       = parseInt(req.body.values_id);
-    let high_Val  = ( req.body.high_Val !== undefined && !isNaN(req.body.high_Val)  ) ? parseInt(req.body.high_Val): 0;
-    let low_Val   = ( req.body.low_Val  !== undefined && !isNaN(req.body.low_Val)   ) ? parseInt(req.body.low_Val) : 0;
-    let pulse     = ( req.body.pulse    !== undefined && !isNaN(req.body.pulse)     ) ? parseInt(req.body.pulse)   : 0;
+    let high_Val  = ( req.body.high_Val !== undefined && !isNaN(req.body.high_Val) && (req.body.high_Val)>0) ? parseInt(req.body.high_Val): 0;
+    let low_Val   = ( req.body.low_Val  !== undefined && !isNaN(req.body.low_Val) && (req.body.low_Val)>0) ? parseInt(req.body.low_Val) : 0;
+    let pulse     = ( req.body.pulse    !== undefined && !isNaN(req.body.pulse)  && (req.body.pulse)>0) ? parseInt(req.body.pulse)   : 0;
     let date   = ( req.body.date     !== undefined &&  isValidDate(req.body.date)) ? addSlashes(req.body.date)  :null;
 
     let Query = `UPDATE blood_pressure_values SET `;

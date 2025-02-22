@@ -13,8 +13,22 @@
         <select id="userSelect" name="options">
         </select>
 
-<button onclick="ShowTable()" >ביצוע</button>
+<button onclick="ShowTable()" >הצג ערכים</button>
+<h2>הוספת נתוני לחץ דם</h2>
 
+<label>ערך גבוה:</label>
+<input type="number" id="high_val" placeholder="לדוג' 120">
+
+<label>ערך נמוך:</label>
+<input type="number" id="low_val" placeholder="לדוג' 80">
+
+<label>דופק:</label>
+<input type="number" id="pulse" placeholder="לדוג' 70">
+
+<label>תאריך:</label>
+<input type="date" id="date">
+
+<button onclick="AddValue()">הוסף</button>
 <table id="userTable" style="display: none;">
         <thead id="mainHeader">
         <tr>
