@@ -1,5 +1,5 @@
-body{background:lightskyblue;direction: rtl; font-family:"Arial";}
-td,th{border:1px solid black;}
+body{background:lightblue;direction: rtl; font-family:"Arial";}
+
 
  select {
      padding: 10px;
@@ -22,6 +22,32 @@ th, td {
 }
 th {
     background-color: #f2f2f2;
+}
+
+
+
+
+button {
+     background: forestgreen;
+     border: none;
+     padding: 8px 19px;
+     font-size: 18px;
+     font-weight: bold;
+     color: white;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+ }
+
+button:hover {
+
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 

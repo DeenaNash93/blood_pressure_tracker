@@ -1,6 +1,6 @@
 var users=[];
 var all_values=[];
-
+var index_to_delete=[];
 
 async function GetUsers(){
     let url="/U/";
@@ -30,7 +30,7 @@ async function CreateUserSelector()
  function ShowTable()
 {
     let table = document.getElementById("userTable");
-    // מציג את הטבלה אם זו הפעם הראשונה שמוסיפים נתון
+
     if (table.style.display === "none")
     {
         table.style.display = "table";
@@ -51,12 +51,13 @@ async function CreateTableBody()
 
         if(parseInt(selectedValue)===row.id_user)
         {
-            s += "<tr>";
+
+            s += `<tr id="${row.id}">`;
+            s += `    <td><input type="checkbox" class="option" value="${row.id}" ></td>`;
             s += `    <td>${row.high_val}</td>`;
             s += `    <td>${row.low_val}</td>`;
             s += `    <td>${row.pulse}</td>`;
             s += `    <td>${row.date}</td>`;
-            s += "</td>";
             s += "</tr>";
         }
 
@@ -85,21 +86,14 @@ async function GetValues()
         let pulse = parseInt(document.getElementById("pulse").value);
         let dateInput = document.getElementById("date").value;
         let reply;
-        /*if (!user_id || !highVal || !lowVal || !pulse || !dateInput) {
-            alert("נא למלא את כל השדות!");
-            return;
-        }*/
-
-        // המרת תאריך לפורמט yyyy-mm-dd
-        // let dateObj = new Date(dateInput);
-        //let formattedDate = dateObj.toISOString().split("T")[0];
-        console.log("נשלח לשרת:", {
+        console.log("נשלח לשרת:",
+            {
             user_id: user_id,
             high_Val: highVal,
             low_Val: lowVal,
             pulse: pulse,
             date: dateInput
-        });
+            });
 
         let url = "/VAL/";
 
@@ -135,7 +129,9 @@ async function GetValues()
         if(all_values[(all_values.length)-1].id===reply.Last_Id)
         {
             let newRow = document.createElement("tr");
+            newRow.id = `${all_values[(all_values.length) - 1].id}`;
             newRow.innerHTML = `
+            <td><input type="checkbox" class="option" value="${all_values[(all_values.length) - 1].id}>"</td>
             <td>${all_values[(all_values.length)-1].high_val}</td>
             <td>${all_values[(all_values.length)-1].low_val}</td>
             <td>${all_values[(all_values.length)-1].pulse}</td>
@@ -153,4 +149,36 @@ async function GetValues()
         document.getElementById("pulse").value = "";
         document.getElementById("date").value = "";
     }
+async function DeleteRow()
+{
+   index_to_delete = Array.from(document.querySelectorAll(".option:checked"))
+        .map(checkbox => checkbox.value);
+   console.log("רשימת הערכים המסומנים ",index_to_delete);
+   if(index_to_delete.length>0)
+   {
+       for (let idx of index_to_delete)
+       {
+           await Delete(idx);
+       }
+       await CreateTableBody();
+       index_to_delete.length=0;
+   }
 
+
+}
+async function Delete(idx)
+{
+    let url="/VAL/";
+    let response=await fetch(url,
+        {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({values_id:idx})
+        }
+    );
+    let data=await response.json();
+    console.log("deleted?",data);
+
+}

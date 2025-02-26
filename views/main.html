@@ -14,7 +14,7 @@
         </select>
 
 <button onclick="ShowTable()" >הצג ערכים</button>
-<h2>הוספת נתוני לחץ דם</h2>
+<h2>הזנת נתוני לחץ דם</h2>
 
 <label>ערך גבוה:</label>
 <input type="number" id="high_val" placeholder="לדוג' 120">
@@ -27,15 +27,19 @@
 
 <label>תאריך:</label>
 <input type="date" id="date">
-
+<br><br>
 <button onclick="AddValue()">הוסף</button>
+<button onclick="()">ערוך</button>
+<button onclick="DeleteRow()">מחיקה</button>
 <table id="userTable" style="display: none;">
         <thead id="mainHeader">
         <tr>
+            <th>סמן</th>
             <th>ערך גבוה</th>
             <th>ערך נמוך</th>
             <th>דופק</th>
             <th>תאריך</th>
+
         </tr>
         </thead>
         <tbody id="mainTableData">
