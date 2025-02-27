@@ -45,10 +45,12 @@ async function ReadValues(req,res,next)
     // console.log(Query);
     const promisePool = db_pool.promise();
     let rows=[];
+    req.values_by_id=[];
     try {
         [rows] = await promisePool.query(Query);
         for(let idx in rows)
         {
+            req.values_by_id[rows[idx].id]=rows[idx];
             rows[idx].date = stripSlashes(rows[idx].formatted_date);
             delete rows[idx].formatted_date;
         }
