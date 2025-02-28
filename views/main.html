@@ -15,6 +15,8 @@
 <button onclick="ShowTable()" >הצג ערכים</button>
 <br><br>
 <h2>הזנת נתוני לחץ דם</h2>
+<br>
+
 <label>ערך גבוה:</label>
 <input type="number" id="high_val" placeholder="לדוג' 120">
 
@@ -32,8 +34,9 @@
 <button onclick="AddValue()">הוסף</button>
 <button onclick="DeleteRow()">מחיקה</button>
 <button onclick="EditRow()">ערוך</button>
-
+    <button onclick="HistoryPage()">היסטוריית ערכים</button>
 </div>
+
 <br>
 <table id="userTable" style="display: none;">
     <thead id="mainHeader">
@@ -52,7 +55,6 @@
     <tbody id="mainTableData">
     </tbody>
 </table>
-<br>
-<button>היסטוריית ערכים</button>
+
 </body>
 </html>
