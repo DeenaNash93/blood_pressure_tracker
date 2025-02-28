@@ -66,7 +66,6 @@ async function CreateTableBody()
     }
     document.getElementById("mainTableData").innerHTML = s;
 }
-
 async function GetValues()
 {
     let url="/VAL/";
@@ -77,9 +76,6 @@ async function GetValues()
     values_by_id=reply.values_by_id;
     console.log("reply=",all_values);
 }
-
-
-
 async function AddValue() {
     let select = document.getElementById("userSelect");
     let user_id = parseInt(select.value);
@@ -156,7 +152,6 @@ function getCheckedValues() {
     return Array.from(document.querySelectorAll(".option:checked"))
         .map(checkbox => checkbox.value);
 }
-
 async function DeleteRow()
 {
     index_to_delete =getCheckedValues();
@@ -194,7 +189,6 @@ function CheckAll()
     document.querySelectorAll("input[type=checkbox]").forEach(checkbox => checkbox.checked = true);
 
 }
-
 function UnCheckAll()
 {
     document.querySelectorAll("input[type=checkbox]").forEach(checkbox => checkbox.checked = false);
@@ -208,7 +202,6 @@ function uncheckByValue(value)
         }
     });
 }
-
 async function SendValesToInput()
 {
     if (getCheckedValues().length === 1)
@@ -237,7 +230,7 @@ async function SendValesToInput()
         return false;
     }
 }
-    async function EditRow()
+async function EditRow()
     {
         let arr = getCheckedValues();
         if (arr.length===1&&check_send)
@@ -285,7 +278,7 @@ async function SendValesToInput()
             check_send=false;
         }
        else {
-           alert(" הקש שלח")
+           alert(" וודא שהסמן מסומן על שורה אחת, ולחץ שלח")
             return false;
         }
 

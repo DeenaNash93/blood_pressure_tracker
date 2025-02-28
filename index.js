@@ -27,6 +27,8 @@ const users_R = require('./Routers/users_R');
 app.use('/U/',users_R);
 const values_R = require('./Routers/values_R');
 app.use('/VAL/',values_R);
+const history_R = require('./Routers/history_R');
+app.use('/H-VAL/',history_R);
 app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port http://localhost:${port}`);
 });

@@ -9,6 +9,14 @@ body{background:lightblue;direction: rtl; font-family:"Arial";}
      background-color: white;
      cursor: pointer;
  }
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* מצמיד את הכפתורים לימין */
+    gap: 10px; /* רווח בין הכפתורים */
+    margin: 6px 7px; /* רווח מעל ומתחת */
+    padding-right: 100px; /* מרחיק מעט מהקצה הימני */
+}
+
 table {
     width: 50%;
     border-collapse: collapse;
