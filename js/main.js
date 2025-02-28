@@ -229,6 +229,7 @@ async function SendValesToInput()
         alert("אנא בחר שורה אחת לשליחה");
         return false;
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 async function EditRow()
     {

@@ -8,13 +8,13 @@ async function MainPage() {
         console.error("ERROR LOADING PAGE");
     }
 }
-// פונקציה לשליפת פרמטר מה-URL
+
 function getQueryParam(param) {
     let params = new URLSearchParams(window.location.search);
     return params.get(param);
 }
 
-// שליפת הערך שנשלח מהדף הקודם
+
 let selectedValue = getQueryParam("selected");
 
 if (selectedValue) {
@@ -24,7 +24,15 @@ if (selectedValue) {
 
 }
 
-
+async function GetUser()
+{
+    let url="/U/";
+    let response=await fetch(url);
+    let reply=await response.json();
+    users_by_id = reply.users_by_id;
+    console.log("reply=",users_by_id);
+    document.getElementById("user_name").innerHTML=`היסטוריית משתמש של  ${users_by_id[selectedValue]} - בחר תאריכים:  `;
+}
 async function ShowTableValues() {
 
     let user_id=localStorage.getItem("selectedUser");
@@ -57,9 +65,9 @@ async function ShowTableValues() {
             for(let idx in rows)
             {
                 s += `<tr>`;
-                s += `    <td>${rows[idx].high_val}</td>`;
-                s += `    <td>${rows[idx].low_val}</td>`;
-                s += `    <td>${rows[idx].pulse}</td>`;
+                s += (is_bold[idx][0])? `<td><b>${rows[idx].high_val}</td></b>` :`<td>${rows[idx].high_val}</td>`;
+                s += (is_bold[idx][1])?`    <td><b>${rows[idx].low_val}</b></td>`:`<td>${rows[idx].low_val}</td>`;
+                s += (is_bold[idx][2])?`    <td><b>${rows[idx].pulse}</b></td>`:`    <td>${rows[idx].pulse}</td>`;
                 s += "</tr>";
             }
         }
@@ -69,4 +77,4 @@ async function ShowTableValues() {
     }
 }
 
-
+GetUser();
