@@ -5,7 +5,7 @@ module.exports = router;
 
 const history_Mid=require("../Middleware/history_Mid");
 
-router.get('/',[history_Mid.GetValsBetweenDates], (req, res) => {
+router.post('/',[history_Mid.GetValsBetweenDates], (req, res) => {
     if(req.success){
         res.status(200).json(
             {

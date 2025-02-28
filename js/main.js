@@ -285,12 +285,13 @@ async function EditRow()
     }
 
 async function HistoryPage() {
-    let url = "/history/";
-    let response = await fetch(url);
 
-    if (response.ok) {
-        window.location.href = url;
-    } else {
-        console.error("ERROR LOADING PAGE");
-    }
+
+        let select = document.getElementById("userSelect");
+        let selectedValue = select.value; // קבלת הערך שנבחר
+
+        // ניווט לדף הנכון עם הנתון כפרמטר
+        window.location.href = `/history/?selected=${encodeURIComponent(selectedValue)}`;
+
+
 }
