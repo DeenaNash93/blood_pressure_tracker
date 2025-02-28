@@ -38,15 +38,15 @@ async function ShowTableValues() {
     let user_id=localStorage.getItem("selectedUser");
     console.log(user_id,  selectedValue);
     document.getElementById("historyTable").style.display="block";
-    let min_date=(document.getElementById("first_date").value===undefined)?"00-00-0000":document.getElementById("first_date").value;
-    let max_date=(document.getElementById("last_date").value===undefined)?"00-00-0000":document.getElementById("last_date").value;
+    let min_date=(document.getElementById("first_date").value===undefined)?"":document.getElementById("first_date").value;
+    let max_date=(document.getElementById("last_date").value===undefined)?"":document.getElementById("last_date").value;
     let url = "/H-VAL/";
 
     try {
         let response = await fetch(url,{
-            method: "POST", // POST לשליחת נתונים בגוף הבקשה
+            method: "POST",
             headers: {
-                "Content-Type": "application/json" // הגדרת תוכן JSON
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 user_id: user_id,
@@ -67,7 +67,8 @@ async function ShowTableValues() {
                 s += `<tr>`;
                 s += (is_bold[idx][0])? `<td><b>${rows[idx].high_val}</td></b>` :`<td>${rows[idx].high_val}</td>`;
                 s += (is_bold[idx][1])?`    <td><b>${rows[idx].low_val}</b></td>`:`<td>${rows[idx].low_val}</td>`;
-                s += (is_bold[idx][2])?`    <td><b>${rows[idx].pulse}</b></td>`:`    <td>${rows[idx].pulse}</td>`;
+                s += (is_bold[idx][2])?`    <td><b>${rows[idx].pulse}</b></td>`:`<td>${rows[idx].pulse}</td>`;
+                s+=`<td>${rows[idx].date}</td>`
                 s += "</tr>";
             }
         }
@@ -75,6 +76,7 @@ async function ShowTableValues() {
     } catch (error) {
         console.error("שגיאה:", error);
     }
+
 }
 
 GetUser();
