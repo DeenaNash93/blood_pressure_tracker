@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>תוכנת מעקב לחץ דם</title>
+    <link rel="stylesheet" href="/CSS1/main.css">
+</head>
+<body>
+<script src="/js/all_users.js"></script>
+
+
+    <label for="yearSelect">בחר שנה:</label>
+    <select id="yearSelect" onfocus="showYears()">
+    <option value="1993">1993</option></select>
+    <label for="monthSelect">בחר חודש:</label>
+    <select id="monthSelect" onfocus="showMonths()">
+        <option value="1">1</option></select>
+<br><br>
+<button id="all_users_btn" onclick="ShowTable()">הצג</button>
+<table id="usersTable" style="display: none;">
+    <thead id="mainHeader">
+    <tr>
+        <th>שם</th>
+        <th>ערך גבוה</th>
+        <th>ערך נמוך</th>
+        <th>דופק</th>
+        <th>כמות חריגות</th>
+
+    </tr>
+    </thead>
+    <tbody id="mainTableData">
+    </tbody>
+</table>
+
+</body>
+</html>

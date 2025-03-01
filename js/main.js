@@ -285,14 +285,12 @@ async function EditRow()
 
     }
 
-async function HistoryPage() {
-
-
+function HistoryPage() {
         let select = document.getElementById("userSelect");
-        let selectedValue = select.value; // קבלת הערך שנבחר
-
-        // ניווט לדף הנכון עם הנתון כפרמטר
+        let selectedValue = select.value;
         window.location.href = `/history/?selected=${encodeURIComponent(selectedValue)}`;
-
-
+}
+function AllUsersPage()
+{
+    window.location.href = `/all-users/`;
 }

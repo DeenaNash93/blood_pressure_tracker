@@ -10,3 +10,7 @@ router.get('/', (req, res) => {
 router.get('/history/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname,"/../views/history.html"));
 })
+
+router.get('/all-users/', (req, res) => {
+    res.status(200).sendFile(path.join(__dirname,"/../views/all_users.html"));
+})
