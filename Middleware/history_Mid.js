@@ -68,6 +68,8 @@ async function GetValsBetweenDates(req,res,next){
     Query+=`  WHERE date BETWEEN`;
     Query+=` '${min_date}' AND '${max_date}'`;
     Query += ` AND id_user = ${idx}`;
+    Query += ` ORDER BY date`;
+
     const promisePool = db_pool.promise();
     let rows=[];
     req.arr_history=[];
@@ -105,5 +107,8 @@ async function GetValsBetweenDates(req,res,next){
 
 module.exports = {
     GetValsBetweenDates: GetValsBetweenDates,
+    IsDeviation1:IsDeviation1,
+    IsDeviation2:IsDeviation2,
+    IsDeviation3:IsDeviation3,
 
 }

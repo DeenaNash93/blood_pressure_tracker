@@ -15,7 +15,7 @@ router.post('/',[history_Mid.GetValsBetweenDates], (req, res) => {
             });
 
     } else {
-        return res.status(500).json({message: "error"});
+        return res.status(500).json({message: "server error"});
     }
 
 });
