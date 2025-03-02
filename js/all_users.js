@@ -1,5 +1,16 @@
 let users_by_id=[];
 let all_users=[];
+async function MainPage()
+{
+    let url = "/";
+    let response = await fetch(url);
+
+    if (response.ok) {
+        window.location.href = url;
+    } else {
+        console.error("ERROR LOADING PAGE");
+    }
+}
 function showMonths()
 {
     let selectElement=document.getElementById("monthSelect");
@@ -14,7 +25,6 @@ function showMonths()
         }
     }
 }
-
 function showYears()
 {
     let selectElement=document.getElementById("yearSelect");
@@ -30,7 +40,6 @@ function showYears()
         }
     }
 }
-
 async function GetUsers()
 {
     let url="/U/";

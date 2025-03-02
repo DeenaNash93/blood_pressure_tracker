@@ -7,16 +7,19 @@
 </head>
 <body>
 <script src="/js/all_users.js"></script>
+<h1>כמות החריגות בחודש - כלל משתמשים</h1>
 
-
-    <label for="yearSelect">בחר שנה:</label>
-    <select id="yearSelect" onfocus="showYears()">
+<h3>אנא בחר חודש ושנה מסויימת</h3>
+<label for="monthSelect"> חודש:</label>
+<select id="monthSelect" onfocus="showMonths()">
+    <option value="1">1</option></select>
+&nbsp;
+<label for="yearSelect"> שנה:</label>
+<select id="yearSelect" onfocus="showYears()">
     <option value="1993">1993</option></select>
-    <label for="monthSelect">בחר חודש:</label>
-    <select id="monthSelect" onfocus="showMonths()">
-        <option value="1">1</option></select>
+
 <br><br>
-<button id="all_users_btn" onclick="ShowTableAllUsers()">הצג</button>
+<button id="all_users_btn" onclick="ShowTableAllUsers()">הצג</button> <button onclick="MainPage()">לדף הראשי </button>
 <table id="usersTable" style="display: none;">
     <thead id="mainHeader">
     <tr>
