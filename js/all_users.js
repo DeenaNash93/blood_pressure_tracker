@@ -95,6 +95,7 @@ async function ShowTableAllUsers() {
                 s += `<td>${insertedUserId[j][2].cnt_low ?? 0}</td>`; // מספר חריגות בלחץ דם נמוך
                 s += `<td>${insertedUserId[j][2].pulse ?? 0}</td>`; // דופק
                 s += `<td>${insertedUserId[j][2].cnt_pulse ?? 0}</td>`; // מספר חריגות בדופק
+                s += (isNaN((insertedUserId[j][2].cnt_pulse)+(insertedUserId[j][2].cnt_low)+(insertedUserId[j][2].cnt_high))) ? `<td>0</td>`:`<td>${(insertedUserId[j][2].cnt_pulse)+(insertedUserId[j][2].cnt_low)+(insertedUserId[j][2].cnt_high)}</td>`;
                 s += "</tr>";
             }
 
