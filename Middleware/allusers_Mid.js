@@ -1,7 +1,6 @@
 const { addSlashes, stripSlashes } = require('slashes');
 const history = require('./history_Mid.js');
 
-
 async function ReadOneUser(req,res,next){
     let month=req.body.month;
     let year=req.body.year;
@@ -20,6 +19,7 @@ async function ReadOneUser(req,res,next){
     try
     {
         [rows] = await promisePool.query(Query);
+        console.log(rows);
         let avgOfHighVal = [];
         let avgOfLowVal = [];
         let avgOfPulse = [];

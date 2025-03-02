@@ -1,3 +1,4 @@
+let users_by_id=[];
 let all_users=[];
 function showMonths()
 {
@@ -30,19 +31,17 @@ function showYears()
     }
 }
 
-function ShowTable()
-{
-    document.getElementById("usersTable").style.display="block";
-}
 async function GetUsers()
 {
     let url="/U/";
     let response=await fetch(url);
     let reply=await response.json();
-    all_users = reply.users_data;
+    users_by_id = reply.users_by_id;
+    all_users= reply.data;
     console.log("users=> ",all_users);
 }
-/*async function ShowTableAllUsers() {
+async function ShowTableAllUsers() {
+    document.getElementById("usersTable").style.display="block";
     await GetUsers();
     let select_year = document.getElementById("yearSelect");
     let selectedYear = select_year.value;
@@ -51,60 +50,63 @@ async function GetUsers()
     let url = "/ALL-U/";
 
     try {
-        let response = await fetch(url,{
+        let response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 month: selectedMonth,
-                year: selectedYear,
-                user_id:
+               year: selectedYear
             })
         });
         if (!response.ok) throw new Error("req problem");
         let data = await response.json();
-        let rows=data.data;
-        let is_bold=data.is_bold;
+        let rows = data.all_users_data;
+        let insertedUserId = [];
         console.log(rows)
-        let s="";
-        if((rows!==undefined)&&(is_bold!==undefined))
-        {
-            for(let idx in rows)
-            {
+        let s = "";
+        console.log(all_users);
+        if (rows.length > 0) {
+            // אתחול המערך ושיוך נתונים לכל משתמש
+            for (let idx = 0; idx < all_users.length; idx++) {
+                insertedUserId[idx] = [];
+                insertedUserId[idx][1] = all_users[idx].name;
+                insertedUserId[idx][2] = {}; // אובייקט ריק כברירת מחדל
+
+                for (let j = 0; j < rows.length; j++) {
+                    if (all_users[idx].id == rows[j].id_user) {
+                        insertedUserId[idx][2] = rows[j]; // משייך את הנתונים למשתמש
+                        break; // ברגע שמצאנו התאמה, אפשר לצאת מהלולאה
+                    }
+                }
+            }
+
+            console.log(insertedUserId);
+
+            // יצירת שורות הטבלה **רק לאחר שהמערך מלא**
+            let s = "";
+            for (let j = 0; j < insertedUserId.length; j++) {
                 s += `<tr>`;
-                s += (is_bold[idx][0])? `<td><b>${rows[idx].high_val}</td></b>` :`<td>${rows[idx].high_val}</td>`;
-                s += (is_bold[idx][1])?`    <td><b>${rows[idx].low_val}</b></td>`:`<td>${rows[idx].low_val}</td>`;
-                s += (is_bold[idx][2])?`    <td><b>${rows[idx].pulse}</b></td>`:`<td>${rows[idx].pulse}</td>`;
-                s+=`<td>${rows[idx].date}</td>`
+                s += `<td>${insertedUserId[j][1]}</td>`; // שם המשתמש
+                s += `<td>${insertedUserId[j][2].high_val ?? 0}</td>`; // לחץ דם גבוה
+                s += `<td>${insertedUserId[j][2].cnt_high ?? 0}</td>`; // מספר חריגות בלחץ דם גבוה
+                s += `<td>${insertedUserId[j][2].low_val ?? 0}</td>`; // לחץ דם נמוך
+                s += `<td>${insertedUserId[j][2].cnt_low ?? 0}</td>`; // מספר חריגות בלחץ דם נמוך
+                s += `<td>${insertedUserId[j][2].pulse ?? 0}</td>`; // דופק
+                s += `<td>${insertedUserId[j][2].cnt_pulse ?? 0}</td>`; // מספר חריגות בדופק
                 s += "</tr>";
             }
+
+            // הוספת השורות לטבלה לאחר שהן נוצרו במלואן
+            document.getElementById("usersBody").innerHTML = s;
         }
-        document.getElementById("mainTableData").innerHTML=s;
-    } catch (error) {
-        console.error("שגיאה:", error);
     }
-
-    console.log(selectedValue);
-    let s = "";
-    console.log(all_values);
-    for(let row of all_values)
-    {
-
-        if(parseInt(selectedValue)===row.id_user)
+    catch(error)
         {
-
-            s += `<tr id="${row.id}">`;
-            s += `    <td><input type="checkbox" class="option" value="${row.id}" ></td>`;
-            s += `    <td>${row.high_val}</td>`;
-            s += `    <td>${row.low_val}</td>`;
-            s += `    <td>${row.pulse}</td>`;
-            s += `    <td>${row.date}</td>`;
-            s += "</tr>";
+        {
+            console.error("שגיאה:", error);
         }
-
-
     }
-    document.getElementById("mainTableData").innerHTML = s;
+
 }
-}*/
