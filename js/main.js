@@ -9,7 +9,7 @@ async function GetUsers(){
     let response=await fetch(url);
     let reply=await response.json();
     users = reply.data;
-    console.log("reply=",users);
+    console.log("users=> ",users);
 }
 
 async function CreateUserSelector()

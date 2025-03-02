@@ -30,8 +30,8 @@ async function GetUser()
     let response=await fetch(url);
     let reply=await response.json();
     users_by_id = reply.users_by_id;
-    console.log("reply=",users_by_id);
-    document.getElementById("user_name").innerHTML=`היסטוריית משתמש של  ${users_by_id[selectedValue]} - בחר תאריכים:  `;
+    console.log("users_by_id=> ",users_by_id);
+    document.getElementById("user_name").innerHTML=` היסטוריית משתמש של  ${users_by_id[selectedValue]} - בחר תאריכים:  `;
 }
 async function ShowTableValues() {
 
@@ -79,4 +79,4 @@ async function ShowTableValues() {
 
 }
 
-GetUser();
+

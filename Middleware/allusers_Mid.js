@@ -2,12 +2,9 @@ const { addSlashes, stripSlashes } = require('slashes');
 const history = require('./history_Mid.js');
 
 
-async function ReadAllUsers(req,res,next){
+async function ReadOneUser(req,res,next){
     let month=req.body.month;
     let year=req.body.year;
-    let user_id=req.body.user_id;
-    let sumOfHighVal=0, sumOfLowVal=0,sumOfPulse=0;
-    let cntHighVal=0,cntLowVal=0,cntPulse=0;
     let Query = ` SELECT *,`;
     Query+=`  DATE_FORMAT(date, "%d-%m-%Y") AS`;
     Query+=`  formatted_date`;
@@ -16,46 +13,106 @@ async function ReadAllUsers(req,res,next){
     Query+= ` ${month} `;
     Query+=`  AND YEAR(date) =`;
     Query+= `${year} `;
-    Query+= `AND id_user = '${user_id}' `;
-    Query+=`  ORDER BY date`;
+    Query += `  ORDER BY id_user ASC, date ASC`;
     const promisePool = db_pool.promise();
     let rows=[];
 
-    try {
+    try
+    {
         [rows] = await promisePool.query(Query);
-        console.log(rows)
-        for(let idx in rows){
-            rows[idx].date = stripSlashes(rows[idx].formatted_date);
-            sumOfHighVal += parseFloat(rows[idx].high_val) || 0;
-            sumOfLowVal += parseFloat(rows[idx].low_val) || 0;
-            sumOfPulse += parseFloat(rows[idx].pulse) || 0;
-            cntHighVal+=(history.IsDeviation1(rows[idx].high_val))?1:0;
-            cntLowVal+=(history.IsDeviation2(rows[idx].low_val))?1:0;
-            cntPulse+=(history.IsDeviation3(rows[idx].pulse))?1:0;
-        }
-        console.log("high,low,pulse", sumOfHighVal, sumOfLowVal, sumOfPulse)
-        req.success=true;
-        req.all_users_data=rows;
+        let avgOfHighVal = [];
+        let avgOfLowVal = [];
+        let avgOfPulse = [];
+        let cntHighVal = [];
+        let cntLowVal = [];
+        let cntPulse = [];
+        let user_by_id=[];
+        let index = 0;
+        let totalCount = 0; // סופר את מספר הרשומות לכל משתמש
+        let id_user = null;
+
+        req.all_users_data = [];
+
         if (rows.length > 0) {
-            req.high_Val_avg = sumOfHighVal / rows.length;
-            req.low_Val_avg = sumOfLowVal / rows.length;
-            req.pulse_avg = sumOfPulse / rows.length;
+            id_user = rows[0].id_user;
+            avgOfHighVal[index] = 0;
+            avgOfLowVal[index] = 0;
+            avgOfPulse[index] = 0;
+            cntHighVal[index] = 0;
+            cntLowVal[index] = 0;
+            cntPulse[index] = 0;
+            totalCount = 0;
+            user_by_id[index]=id_user;
+            for (let idx = 0; idx < rows.length; idx++) {
+                rows[idx].date = stripSlashes(rows[idx].formatted_date);
+
+                if (rows[idx].id_user !== id_user) {
+                    // חישוב ממוצע למשתמש הקודם
+                    avgOfHighVal[index] /= totalCount;
+                    avgOfLowVal[index] /= totalCount;
+                    avgOfPulse[index] /= totalCount;
+
+                    // שמירת הנתונים של המשתמש הקודם
+                    req.all_users_data[index] = {
+                        id_user:user_by_id[index],
+                        high_val: parseFloat(avgOfHighVal[index]),
+                        cnt_high: parseInt(cntHighVal[index]),
+                        low_val: parseFloat(avgOfLowVal[index]),
+                        cnt_low: parseInt(cntLowVal[index]),
+                        pulse: parseFloat(avgOfPulse[index]),
+                        cnt_pulse: parseInt(cntPulse[index])
+                    };
+
+                    // התחלה חדשה למשתמש הבא
+                    index++;
+                    id_user = rows[idx].id_user;
+                    avgOfHighVal[index] = 0;
+                    avgOfLowVal[index] = 0;
+                    avgOfPulse[index] = 0;
+                    cntHighVal[index] = 0;
+                    cntLowVal[index] = 0;
+                    cntPulse[index] = 0;
+                    totalCount = 0;
+                    user_by_id[index]=id_user;
+                }
+
+                avgOfHighVal[index] += parseFloat(rows[idx].high_val) || 0;
+                avgOfLowVal[index] += parseFloat(rows[idx].low_val) || 0;
+                avgOfPulse[index] += parseFloat(rows[idx].pulse) || 0;
+                cntHighVal[index] += (history.IsDeviation1(rows[idx].high_val)) ? 1 : 0;
+                cntLowVal[index] += (history.IsDeviation2(rows[idx].low_val)) ? 1 : 0;
+                cntPulse[index] += (history.IsDeviation3(rows[idx].pulse)) ? 1 : 0;
+                totalCount++;
+            }
+
+            // חישוב ממוצע עבור המשתמש האחרון
+            avgOfHighVal[index] /= totalCount;
+            avgOfLowVal[index] /= totalCount;
+            avgOfPulse[index] /= totalCount;
+
+            // שמירת הנתונים של המשתמש האחרון
+            req.all_users_data[index] = {
+                id_user:user_by_id[index],
+                high_val: parseFloat(avgOfHighVal[index]),
+                cnt_high: parseInt(cntHighVal[index]),
+                low_val: parseFloat(avgOfLowVal[index]),
+                cnt_low: parseInt(cntLowVal[index]),
+                pulse: parseFloat(avgOfPulse[index]),
+                cnt_pulse: parseInt(cntPulse[index])
+            };
+
+            req.success = true;
         } else {
-            req.high_Val_avg = 0;
-            req.low_Val_avg = 0;
-            req.pulse_avg = 0;
+            req.all_users_data = [];
         }
-        req.cntHighVal=(cntHighVal);
-        req.cntLowVal=(cntLowVal);
-        req.cntPulse=(cntPulse);
     } catch (err) {
-        req.success=false;
+        req.success = false;
         console.log(err);
     }
+
     next();
 }
 
-
 module.exports = {
-    ReadAllUsers:ReadAllUsers,
+    ReadOneUser:ReadOneUser,
 }
