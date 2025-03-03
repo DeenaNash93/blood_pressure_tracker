@@ -1,7 +1,7 @@
 // npm i express body-parser ejs htmlspecialchars mysql2  slashes@2.0.0  swagger-autogen
 // npm i express body-parser ejs htmlspecialchars mysql2  slashes@2.0.0  swagger-autogen swagger-ui-express
 
-const port = 7381;
+const port = 7382;
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -45,6 +45,6 @@ const history_R = require('./Routers/history_R');
 app.use('/H-VAL/',history_R);
 const allusers_R = require('./Routers/allusers_R');
 app.use('/ALL-U/',allusers_R);
-app.listen(port, () => {   //server starts listening for any attempts from a client to connect at port: {port}
+app.listen(port, () => {
     console.log(`Now listening on port http://localhost:${port}`);
 });

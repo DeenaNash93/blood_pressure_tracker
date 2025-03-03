@@ -5,7 +5,7 @@
     "description": "תוכנת משימות מעולה",
     "version": "1.0.0"
   },
-  "host": "localhost:7381",
+  "host": "localhost:7382",
   "basePath": "/",
   "schemes": [
     "http"

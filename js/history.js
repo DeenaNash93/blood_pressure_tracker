@@ -72,7 +72,7 @@ async function ShowTableValues() {
                 s += "</tr>";
             }
         }
-        document.getElementById("mainTableData").innerHTML=s;
+        document.getElementById("mainTableDataHistory").innerHTML=s;
     } catch (error) {
         console.error("שגיאה:", error);
     }
