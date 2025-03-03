@@ -21,31 +21,17 @@ app.use("/js",express.static(path.join(__dirname, "js")));
 
 global.htmlspecialchars = require('htmlspecialchars');
 // const { addSlashes, stripSlashes } = require('slashes');
-const swaggerAutogen = require('swagger-autogen')();
-
-const doc = {
-    info: {
-        title: 'My API',
-        description: 'תוכנת משימות מעולה'
-    },
-    host: `localhost:${port}`
-};
-
-const outputFile = './swagger-output.json';
-const swaggerOutputFile = './swagger-output.json';
-const routes = ['./index.js'];
-
-swaggerAutogen(outputFile, routes, doc);
 
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require(swaggerOutputFile);
+const swaggerDocument = require('./swagger-output.json');
 
 var options = {
     explorer: true
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+
 
 const Pages_R = require('./Routers/Pages_R');
 app.use('/',Pages_R);
