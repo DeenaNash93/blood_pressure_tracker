@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: מרץ 03, 2025 בזמן 08:55 AM
+-- Generation Time: מרץ 05, 2025 בזמן 06:35 PM
 -- גרסת שרת: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -45,7 +45,8 @@ INSERT INTO `blood_pressure_values` (`id`, `id_user`, `high_val`, `low_val`, `pu
                                                                                                   (143, 2, 123, 85, 79, '2025-03-03 00:00:00'),
                                                                                                   (144, 2, 126, 89, 79, '2025-02-27 00:00:00'),
                                                                                                   (145, 4, 123, 88, 98, '2025-02-23 00:00:00'),
-                                                                                                  (146, 4, 150, 120, 102, '2025-02-12 00:00:00');
+                                                                                                  (146, 4, 150, 120, 102, '2025-02-12 00:00:00'),
+                                                                                                  (148, 1, 136, 136, 136, '2025-03-29 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blood_pressure_values`
 --
 ALTER TABLE `blood_pressure_values`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `users`
