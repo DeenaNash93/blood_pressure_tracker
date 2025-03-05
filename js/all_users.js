@@ -1,5 +1,6 @@
 let users_by_id=[];
 let all_users=[];
+let months=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"]
 async function MainPage()
 {
     let url = "/";
@@ -20,7 +21,7 @@ function showMonths()
         {
             let option = document.createElement("option");
             option.value = i;
-            option.textContent = i;
+            option.textContent = months[i-1];
             selectElement.appendChild(option);
         }
     }
@@ -56,6 +57,7 @@ async function ShowTableAllUsers() {
     let selectedYear = select_year.value;
     let select_month = document.getElementById("monthSelect");
     let selectedMonth = select_month.value;
+    console.log(selectedYear,selectedMonth);
     let url = "/ALL-U/";
 
     try {
@@ -110,6 +112,10 @@ async function ShowTableAllUsers() {
 
             // הוספת השורות לטבלה לאחר שהן נוצרו במלואן
             document.getElementById("usersBody").innerHTML = s;
+        }
+        else
+        {
+            document.getElementById("usersBody").innerHTML = "";
         }
     }
     catch(error)

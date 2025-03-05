@@ -1,7 +1,7 @@
 const { addSlashes, stripSlashes } = require('slashes');
 const history = require('./history_Mid.js');
 
-async function ReadOneUser(req,res,next){
+async function ReadUsers(req,res,next){
     let month=req.body.month;
     let year=req.body.year;
     let Query = ` SELECT *,`;
@@ -19,7 +19,7 @@ async function ReadOneUser(req,res,next){
     try
     {
         [rows] = await promisePool.query(Query);
-        console.log(rows);
+        console.log("  חזר מה sql",rows);
         let avgOfHighVal = [];
         let avgOfLowVal = [];
         let avgOfPulse = [];
@@ -32,8 +32,13 @@ async function ReadOneUser(req,res,next){
         let id_user = null;
 
         req.all_users_data = [];
-
-        if (rows.length > 0) {
+        if (rows.length === 0) {
+            req.all_users_data = [];
+            req.success = true;
+            return next();
+        }
+        if (rows.length > 0)
+        {
             id_user = rows[0].id_user;
             avgOfHighVal[index] = 0;
             avgOfLowVal[index] = 0;
@@ -46,11 +51,17 @@ async function ReadOneUser(req,res,next){
             for (let idx = 0; idx < rows.length; idx++) {
                 rows[idx].date = stripSlashes(rows[idx].formatted_date);
 
-                if (rows[idx].id_user !== id_user) {
-                    // חישוב ממוצע למשתמש הקודם
-                    avgOfHighVal[index] /= totalCount;
-                    avgOfLowVal[index] /= totalCount;
-                    avgOfPulse[index] /= totalCount;
+                if (rows[idx].id_user !== id_user)
+                {
+                    if (totalCount > 0) {
+                        avgOfHighVal[index] /= totalCount;
+                        avgOfLowVal[index] /= totalCount;
+                        avgOfPulse[index] /= totalCount;
+                    } else {
+                        avgOfHighVal[index] = 0;
+                        avgOfLowVal[index] = 0;
+                        avgOfPulse[index] = 0;
+                    }
 
                     // שמירת הנתונים של המשתמש הקודם
                     req.all_users_data[index] = {
@@ -102,7 +113,8 @@ async function ReadOneUser(req,res,next){
             };
 
             req.success = true;
-        } else {
+        } else
+        {
             req.all_users_data = [];
         }
     } catch (err) {
@@ -114,5 +126,5 @@ async function ReadOneUser(req,res,next){
 }
 
 module.exports = {
-    ReadOneUser:ReadOneUser,
+    ReadUsers:ReadUsers,
 }

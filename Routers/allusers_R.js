@@ -4,7 +4,7 @@ module.exports = router;
 
 const allusers_Mid=require("../Middleware/allusers_Mid");
 
-router.post('/',[allusers_Mid.ReadOneUser], (req, res) => {
+router.post('/',[allusers_Mid.ReadUsers], (req, res) => {
     if(req.success)
     {
         res.status(200).json(
