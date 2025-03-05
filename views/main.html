@@ -13,7 +13,7 @@
 <label for="userSelect">בחר משתמש:</label>
 <select id="userSelect" name="options">
 </select>
-<button onclick="ShowTable()">הצג</button>
+<button onclick="HistoryPage()">היסטוריית משתמש</button>
 <br><br>
 <label>ערך גבוה:</label>
 <input type="number" id="high_val" placeholder="לדוג' 120">
@@ -28,14 +28,14 @@
 <input  type="date" id="date">
 <br><br>
 <div class="button-container">
+    <button onclick="ShowTable()">הצג</button>
     <button onclick="AddValue()">הוסף</button>
     <button onclick="DeleteRow()">מחיקה</button>
     <button onclick="EditRow()">ערוך</button>
-    <button onclick="HistoryPage()">היסטוריית משתמש</button>
-    <button onclick="AllUsersPage()">כלל משתמשים</button>
-</div>
 
+</div>
 <br>
+<button onclick="AllUsersPage()">כלל משתמשים</button>
 <table id="userTable" style="display: none;">
     <thead id="mainHeader">
     <tr>
