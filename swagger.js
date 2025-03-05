@@ -9,7 +9,7 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const routes = ['./index.js']; // התאימי בהתאם לנתיבים שלך
+const routes = ['./index.js'];
 
 swaggerAutogen(outputFile, routes, doc).then(() => {
     console.log("swagger-output.json נוצר בהצלחה!");
